@@ -17,6 +17,7 @@ body {
 }
 
 .header {
+    position: relative;
     height: 55px;
     background: linear-gradient(90deg, rgba(47, 173, 246, 0.6), rgba(128, 58, 242, 0.6));
     overflow: hidden;
@@ -47,7 +48,7 @@ body {
     right: 0;
     top: 55px;
     bottom: 55px;
-    background-color: #f4f3f3;
+    background-color: #e2f0f1;
     box-sizing: border-box;
     padding: 10px 0;
     overflow: hidden;
@@ -157,8 +158,10 @@ body {
 .footer img {
     width: 40px;
     height: 40px;
+    border-radius: 20px;
     float: left;
     margin: 8px 0 0 20px;
+    box-shadow: 1px 1px 6px 0px;
 }
 
 .input_txt {
@@ -186,4 +189,63 @@ body {
     outline: none;
     color: #fff;
     cursor: pointer;
+}
+
+/* Hide the default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.container {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 92px;
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #ccc;
+    border-radius: 100%;
+    background: #e8e8e8;
+    box-shadow: 3px 3px 5px #c5c5c5,
+        -3px -3px 5px #ffffff;
+    transition-duration: 0.5s;
+}
+
+.container input:checked~.checkmark {
+    box-shadow: inset 3px 3px 5px #c5c5c5,
+        inset -3px -3px 5px #ffffff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+}
+
+.container input:checked~.checkmark:after {
+    opacity: 1;
+}
+
+.container .checkmark:after {
+    left: 0.45em;
+    top: 0.25em;
+    width: 0.25em;
+    height: 0.5em;
+    border: solid darkgray;
+    border-width: 0 0.15em 0.15em 0;
+    transform: rotate(45deg);
 }
