@@ -1,0 +1,1 @@
+let flag = false; let btn = document.querySelector('.music');let icon = btn.querySelector('.iconfont');let audio = document.querySelector('.music_audio');btn.addEventListener('click', () => {flag = !flag;icon.classList.toggle('active');if (flag) audio.play();else audio.pause();});audio.onended = () => {audio.play();};
