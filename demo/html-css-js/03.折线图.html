@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        height: 600px;
+        width: 900px;
+        margin: 100px auto;
+        background-color: #55efc4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <canvas class="myc" width="900" height="600"></canvas>
+    </div>
+
+    <script>
+      // let list = [
+      //   { name: '0分人数', num: 13 },
+      //   { name: '不及格人数', num: 12 },
+      //   { name: '及格人数', num: 48 },
+      //   { name: '优秀人数', num: 20 },
+      //   { name: '满分人数', num: 5 },
+      //   { name: '最佳人数', num: 3 },
+      // ]
+      // let info = {
+      //   sum: 60,
+      //   x_name: '类型',
+      //   y_name: '人数',
+      // }
+      let list = [
+        { name: '1月', num: 1200 },
+        { name: '2月', num: 4000 },
+        { name: '3月', num: 7000 },
+        { name: '4月', num: 7500 },
+        { name: '5月', num: 7200 },
+        { name: '6月', num: 6700 },
+        { name: '7月', num: 8000 },
+        { name: '8月', num: 4300 },
+        { name: '9月', num: 9000 },
+        { name: '10月', num: 8000 },
+        { name: '11月', num: 9500 },
+        { name: '12月', num: 3500 },
+      ]
+      let info = {
+        sum: 10000,
+        x_name: '时间',
+        y_name: '工资',
+      }
+
+      let c = document.querySelector('.myc')
+      let ctx = c.getContext('2d')
+      // 坐标轴
+      ctx.lineWidth = 4
+      ctx.beginPath()
+      ctx.moveTo(50, 20)
+      ctx.lineTo(50, 550)
+      ctx.lineTo(880, 550)
+      ctx.strokeStyle = '#34495e'
+      ctx.stroke()
+
+      // 坐标轴箭头
+      ctx.beginPath()
+      ctx.moveTo(40, 40)
+      ctx.lineTo(50, 20)
+      ctx.lineTo(60, 40)
+      ctx.stroke()
+      ctx.beginPath()
+      ctx.moveTo(860, 540)
+      ctx.lineTo(880, 550)
+      ctx.lineTo(860, 560)
+      ctx.stroke()
+
+      // Y轴刻度(50,50-550)
+      let sy = String(info.sum)[0] - 0
+      sy = sy === 1 ? 10 : sy
+      sy = sy > 4 ? sy : sy * 2
+      // 单位刻度
+      t1 = 500 / sy
+      ctx.lineWidth = 2
+      ctx.font = 'lighter 16px 宋体'
+      ctx.textAlign = 'end'
+      ctx.textBaseline = 'middle'
+      for (let i = 0; i <= sy; i++) {
+        // 数字
+        ctx.strokeStyle = '#3498db'
+        ctx.strokeText((info.sum / sy) * i, 40, 550 - i * t1)
+        if (i === 0) continue
+        // 虚线
+        ctx.beginPath()
+        ctx.setLineDash([4])
+        ctx.moveTo(50, 550 - i * t1)
+        ctx.lineTo(880, 550 - i * t1)
+        ctx.stroke()
+        // 刻度
+        ctx.strokeStyle = '#34495e'
+        ctx.beginPath()
+        ctx.setLineDash([])
+        ctx.moveTo(50, 550 - i * t1)
+        ctx.lineTo(57, 550 - i * t1)
+        ctx.stroke()
+      }
+      ctx.strokeStyle = '#3498db'
+      ctx.textAlign = 'start'
+      ctx.textBaseline = 'bottom'
+      ctx.strokeText(info.y_name, 10, 20)
+
+      // X轴刻度(50-850,550)
+      let sx = list.length
+      let t2 = 750 / sx
+      ctx.textAlign = 'center'
+      for (let i = 1; i <= sx; i++) {
+        // 刻度
+        ctx.strokeStyle = '#34495e'
+        ctx.beginPath()
+        ctx.moveTo(50 + i * t2, 550)
+        ctx.lineTo(50 + i * t2, 543)
+        ctx.stroke()
+        // 内容
+        ctx.strokeStyle = '#3498db'
+        ctx.textBaseline = 'top'
+        ctx.strokeText(list[i - 1].name, 50 + i * t2, 560)
+        // 绘制节点
+        ctx.beginPath()
+        ctx.arc(
+          50 + i * t2,
+          550 - (500 / info.sum) * list[i - 1].num,
+          4,
+          0,
+          2 * Math.PI
+        )
+        ctx.fillStyle = 'red'
+        ctx.fill()
+        // 数据
+        ctx.strokeStyle = '#5352ed'
+        ctx.textBaseline = 'bottom'
+        ctx.strokeText(
+          list[i - 1].num,
+          50 + i * t2,
+          550 - (500 / info.sum) * list[i - 1].num - 5
+        )
+      }
+      ctx.strokeStyle = '#3498db'
+      ctx.textAlign = 'end'
+      ctx.textBaseline = 'top'
+      ctx.strokeText(info.x_name, 895, 580)
+
+      // 连线
+      ctx.strokeStyle = 'red'
+      ctx.beginPath()
+      ctx.moveTo(50 + t2, 550 - (500 / info.sum) * list[0].num)
+      for (let i = 2; i <= sx; i++) {
+        ctx.lineTo(50 + i * t2, 550 - (500 / info.sum) * list[i - 1].num)
+      }
+      ctx.stroke()
+    </script>
+  </body>
+</html>

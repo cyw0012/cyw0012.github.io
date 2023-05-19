@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background-color: #34495e;
+      }
+      .box {
+        width: 600px;
+        height: 400px;
+        margin: 200px auto;
+        /* background-color: aquamarine; */
+        position: relative;
+      }
+      .box span {
+        position: absolute;
+        font-size: 18px;
+        color: #30336b;
+        background-color: antiquewhite;
+        box-shadow: 2px 5px 9px 1px #948c81;
+        text-shadow: 1px 1px 7px #30336b;
+      }
+      /* .box span:last-child {
+        color: red;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+
+    <script>
+      let str = '我命由我不由天！恰是风华正茂，又怎甘堕落沉沦？'
+      let str_arr = str.split('')
+      let box = document.querySelector('.box')
+      let getArr = (func, num, width, path) => {
+        let res = []
+        for (let i = 0; i < num; i++) {
+          let x = (width / num) * i
+          let y =
+            (func(path[0] + (i * (path[1] - path[0])) / num) * width) /
+            (path[1] - path[0])
+          res.push({ x, y: -y })
+        }
+        return res
+      }
+      let init = () => {
+        str_arr.forEach((item, index) => {
+          let span = document.createElement('span')
+          span.innerHTML = item
+          box.appendChild(span)
+        })
+      }
+      let show = (func, width, path) => {
+        let arr = getArr(func, str_arr.length, width, path)
+        let span = box.querySelectorAll('span')
+        span.forEach((item, index) => {
+          item.style.top = arr[index].y + 'px'
+          item.style.left = arr[index].x + 'px'
+        })
+      }
+      init()
+      // show((x) => Math.sin(x), 600, [0, 4 * Math.PI])
+
+      // 波浪动画
+      let offset = 0
+      let animation = () => {
+        offset += 0.05
+        show((x) => Math.sin(x), 600, [offset, offset + 4 * Math.PI])
+        requestAnimationFrame(animation)
+      }
+      animation()
+    </script>
+  </body>
+</html>

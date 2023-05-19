@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        padding: 20px;
+        height: 600px;
+        width: 900px;
+        margin: 100px auto;
+        background-color: #55efc4;
+      }
+      .zhu {
+        display: flex;
+        height: 500px;
+        width: 100%;
+        border-left: 2px solid #3498db;
+        border-bottom: 2px solid #3498db;
+        justify-content: space-evenly;
+      }
+      .zhu .item {
+        position: relative;
+        width: 50px;
+        height: 100%;
+        /* background-color: #ffeaa7; */
+      }
+      .zhu .item .before {
+        position: absolute;
+        bottom: 30%;
+        width: 100%;
+        text-align: center;
+      }
+      .zhu .item .after {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 30%;
+        background-color: #70a1ff;
+      }
+      .con {
+        display: flex;
+        justify-content: space-evenly;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="zhu">
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+        <div class="item">
+          <div class="before"></div>
+          <div class="after"></div>
+        </div>
+      </div>
+      <div class="con">
+        <div class="item-name"></div>
+        <div class="item-name"></div>
+        <div class="item-name"></div>
+        <div class="item-name"></div>
+        <div class="item-name"></div>
+        <div class="item-name"></div>
+      </div>
+    </div>
+    <script>
+      let list = [
+        { name: '00:00', num: 45 },
+        { name: '01:00', num: 12 },
+        { name: '02:00', num: 13 },
+        { name: '03:00', num: 12 },
+        { name: '04:00', num: 0 },
+        { name: '05:00', num: 12 },
+        { name: '06:00', num: 48 },
+        { name: '07:00', num: 20 },
+        { name: '08:00', num: 34 },
+        { name: '09:00', num: 28 },
+        { name: '10:00', num: 15 },
+        { name: '11:00', num: 10 },
+        { name: '12:00', num: 34 },
+        { name: '13:00', num: 34 },
+        { name: '14:00', num: 53 },
+        { name: '15:00', num: 5 },
+        { name: '16:00', num: 35 },
+        { name: '17:00', num: 45 },
+        { name: '18:00', num: 51 },
+        { name: '19:00', num: 51 },
+        { name: '20:00', num: 23 },
+        { name: '21:00', num: 51 },
+        { name: '22:00', num: 52 },
+        { name: '23:00', num: 45 },
+      ]
+      let sum = 60
+      let nn = 6
+      let zhu = document.querySelector('.zhu')
+      let con = document.querySelector('.con')
+      let it_list_before = zhu.querySelectorAll('.before')
+      let it_list_after = zhu.querySelectorAll('.after')
+      let it_name_list = con.querySelectorAll('.item-name')
+      let cnt = 0
+      for (let i = 0; i < nn; i++) {
+        it_list_before[i].innerHTML = list[i].num
+        let s = (list[i].num / sum) * 100
+        it_list_before[i].style.bottom = `${s}%`
+        it_list_after[i].style.height = `${s}%`
+        it_name_list[i].innerHTML = list[i].name
+      }
+      for (let i = 0; i < nn; i++) {
+        let j = i + 1
+        setInterval(() => {
+          if (j === list.length + i - nn + 1) return
+          it_list_before[i].innerHTML = list[j].num
+          let s = (list[j].num / sum) * 100
+          it_list_before[i].style.bottom = `${s}%`
+          it_list_after[i].style.height = `${s}%`
+          it_name_list[i].innerHTML = list[j].name
+          j++
+        }, 1000)
+      }
+    </script>
+  </body>
+</html>

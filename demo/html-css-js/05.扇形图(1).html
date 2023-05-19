@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        height: 600px;
+        width: 900px;
+        margin: 100px auto;
+        background-color: #55efc4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <canvas class="myc" width="900" height="600"></canvas>
+    </div>
+
+    <script>
+      let list = [
+        { name: '差', num: 12 },
+        { name: '良', num: 28 },
+        { name: '优', num: 15 },
+        { name: '佳', num: 5 },
+      ]
+      let info = {
+        sum: 60,
+        colors: ['red', 'green', 'yellow', 'blue', 'pink'],
+        title: '学生成绩分析 - 扇形图',
+      }
+      let c = document.querySelector('.myc')
+      let ctx = c.getContext('2d')
+      let t1
+      let t2 = 0
+      ctx.lineWidth = 2
+      ctx.font = '16px 宋体'
+      for (let i = 0; i < list.length; i++) {
+        t1 = t2
+        t2 = t1 + (list[i].num / info.sum) * 2
+        // 绘制扇形
+        ctx.beginPath()
+        ctx.fillStyle = info.colors[i]
+        ctx.arc(450, 300, 100, t1 * Math.PI, t2 * Math.PI)
+        ctx.lineTo(450, 300)
+        ctx.closePath()
+        ctx.fill()
+
+        // 绘制节点
+        let p = (t1 + t2) / 2
+        ctx.beginPath()
+        ctx.fillStyle = '#34495e'
+        ctx.arc(
+          450 + 60 * Math.cos(p * Math.PI),
+          300 + 60 * Math.sin(p * Math.PI),
+          3,
+          0,
+          2 * Math.PI
+        )
+        ctx.fill()
+
+        // 绘制线条
+        ctx.strokeStyle = '#34495e'
+        ctx.beginPath()
+        ctx.moveTo(
+          450 + 60 * Math.cos(p * Math.PI),
+          300 + 60 * Math.sin(p * Math.PI)
+        )
+        ctx.lineTo(
+          450 + 150 * Math.cos(p * Math.PI),
+          300 + 150 * Math.sin(p * Math.PI)
+        )
+        if (p >= 1.5 || p < 0.5) {
+          ctx.lineTo(
+            450 + 150 * Math.cos(p * Math.PI) + 60,
+            300 + 150 * Math.sin(p * Math.PI)
+          )
+        } else {
+          ctx.lineTo(
+            450 + 150 * Math.cos(p * Math.PI) - 60,
+            300 + 150 * Math.sin(p * Math.PI)
+          )
+        }
+        ctx.stroke()
+
+        // 绘制文字
+        ctx.textBaseline = 'middle'
+        if (p >= 1.5 || p < 0.5) {
+          ctx.textAlign = 'start'
+          ctx.strokeText(
+            list[i].name + ' ' + list[i].num + '人',
+            450 + 150 * Math.cos(p * Math.PI) + 63,
+            300 + 150 * Math.sin(p * Math.PI)
+          )
+        } else {
+          ctx.textAlign = 'end'
+          ctx.strokeText(
+            list[i].name + ' ' + list[i].num + '人',
+            450 + 150 * Math.cos(p * Math.PI) - 63,
+            300 + 150 * Math.sin(p * Math.PI)
+          )
+        }
+        ctx.strokeStyle = '#30336b'
+        ctx.textBaseline = 'bottom'
+        ctx.strokeText(
+          ((list[i].num / info.sum) * 100).toFixed(2) + '%',
+          450 + 150 * Math.cos(p * Math.PI),
+          300 + 150 * Math.sin(p * Math.PI) - 2
+        )
+      }
+
+      // 标题
+      ctx.font = '20px 正楷'
+      ctx.strokeStyle = '#5352ed'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'bottom'
+      ctx.strokeText(info.title, 450, 590)
+    </script>
+  </body>
+</html>
