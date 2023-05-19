@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>位移-基本使用</title>
+    <style>
+        .father {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            margin: 100px auto;
+            border: 1px solid #000;
+        }
+        
+        .son {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background-color: pink;
+            transition: all 2s;
+        }
+
+        .son:nth-child(1){
+          top: 0;
+          left: 0;
+        }
+        .son:nth-child(2){
+          top: 0;
+          right: 0;
+        }
+        .son:nth-child(3){
+          bottom: 0;
+          left: 0;
+        }
+        .son:nth-child(4){
+          bottom: 0;
+          right: 0;
+        }
+
+        .father:hover .son{
+          top: 50%;
+          left: 50%;
+          /* transform: translate(50px,100px); */
+          /* 百分比：参考自身尺寸计算结果 */
+          transform: translate(-50%,-50%);
+          /* 一个值默认为水平 */
+          /* transform: translateX(50px); */
+          /* transform: translateY(50px); */
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son"></div>
+        <div class="son"></div>
+        <div class="son"></div>
+        <div class="son"></div>
+    </div>
+</body>
+
+</html>
