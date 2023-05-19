@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        box-sizing: border-box;
+      }
+      .box {
+        margin: 100px auto;
+        width: 450px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <!-- 宽高保持 3 : 2 -->
+      <canvas class="myc" width="450" height="300"></canvas>
+    </div>
+    <script>
+      let drawBig = (x, y, r) => {
+        ctx.beginPath()
+        ctx.fillStyle = 'yellow'
+        ctx.moveTo(x, y - r)
+        for (let i = 1; i <= 4; i++) {
+          ctx.lineTo(
+            x + r * Math.cos((i * Math.PI * 4) / 5 - Math.PI / 2),
+            y + r * Math.sin((i * Math.PI * 4) / 5 - Math.PI / 2)
+          )
+        }
+        ctx.closePath()
+        ctx.fill()
+      }
+
+      let drawSmall = (x, y, r) => {
+        let sin =
+          (y - 5 * t) /
+          Math.sqrt(Math.pow(x - 5 * t, 2) + Math.pow(y - 5 * t, 2))
+
+        ctx.beginPath()
+        ctx.fillStyle = 'yellow'
+        ctx.moveTo(
+          x + r * Math.cos(Math.PI + Math.asin(sin)),
+          y + r * Math.sin(Math.PI + Math.asin(sin))
+        )
+        for (let i = 1; i <= 4; i++) {
+          ctx.lineTo(
+            x + r * Math.cos((i * Math.PI * 4) / 5 + Math.PI + Math.asin(sin)),
+            y + r * Math.sin((i * Math.PI * 4) / 5 + Math.PI + Math.asin(sin))
+          )
+        }
+        ctx.closePath()
+        ctx.fill()
+      }
+
+      let c = document.querySelector('.myc')
+      let ctx = c.getContext('2d')
+      let w = c.width
+      let h = c.height
+      let t = w / 30
+      // 绘制矩形
+      ctx.fillStyle = 'red'
+      ctx.fillRect(0, 0, w, h)
+      // 绘制大五角星
+      drawBig(5 * t, 5 * t, 3 * t)
+      // 绘制四个小五角星
+      drawSmall(10 * t, 2 * t, t)
+      drawSmall(12 * t, 4 * t, t)
+      drawSmall(12 * t, 7 * t, t)
+      drawSmall(10 * t, 9 * t, t)
+    </script>
+  </body>
+</html>
