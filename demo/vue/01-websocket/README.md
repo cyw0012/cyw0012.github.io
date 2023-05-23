@@ -1,4 +1,4 @@
-# 01-websocket
+# websocket
 
 ## Project setup
 ```
