@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/jQuery.js"></script>
+    <script src="./index.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+        background-image: url('./images/星空.png');
+        background-size: cover;
+      }
+      .box {
+        width: 500px;
+        height: 100px;
+        margin: 100px auto 0;
+        /* background-color: aquamarine; */
+        position: relative;
+      }
+      .box span {
+        position: absolute;
+        font-size: 18px;
+        color: #30336b;
+        background-color: antiquewhite;
+        box-shadow: 2px 5px 9px 1px #948c81;
+        text-shadow: 1px 1px 7px #30336b;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 20px auto;
+        color: aliceblue;
+        background-color: rgba(250, 235, 215, 0.3);
+        border-radius: 10px;
+      }
+      tr td:first-child {
+        width: 35%;
+      }
+      tr td:last-child {
+        width: 70%;
+      }
+      td {
+        height: 70px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 10px;
+        border-radius: 5px;
+        background-color: #5b7ccf;
+        border: 1px solid black;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <table border width="500">
+      <tr>
+        <td>用户名:</td>
+        <td class="username"></td>
+      </tr>
+      <tr>
+        <td>邮箱:</td>
+        <td class="email"></td>
+      </tr>
+      <tr>
+        <td>QQ:</td>
+        <td class="qq"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button class="loginout">退出登录</button></td>
+      </tr>
+    </table>
+  </body>
+  <script>
+    let str = '欢迎大佬登录，这是你的详细信息：'
+    let str_arr = str.split('')
+    let box = document.querySelector('.box')
+    let getArr = (func, num, width, path) => {
+      let res = []
+      for (let i = 0; i < num; i++) {
+        let x = (width / num) * i
+        let y =
+          (func(path[0] + (i * (path[1] - path[0])) / num) * width) /
+          (path[1] - path[0])
+        res.push({ x, y: -y })
+      }
+      return res
+    }
+    let init = () => {
+      str_arr.forEach((item, index) => {
+        let span = document.createElement('span')
+        span.innerHTML = item
+        box.appendChild(span)
+      })
+    }
+    let show = (func, width, path) => {
+      let arr = getArr(func, str_arr.length, width, path)
+      let span = box.querySelectorAll('span')
+      span.forEach((item, index) => {
+        item.style.top = arr[index].y + 'px'
+        item.style.left = arr[index].x + 'px'
+      })
+    }
+    init()
+    // show((x) => Math.sin(x), 500, [0, 4 * Math.PI])
+
+    // 波浪动画
+    let offset = 0
+    let animation = () => {
+      offset += 0.05
+      show((x) => Math.sin(x), 500, [offset, offset + 4 * Math.PI])
+      requestAnimationFrame(animation)
+    }
+    animation()
+  </script>
+</html>

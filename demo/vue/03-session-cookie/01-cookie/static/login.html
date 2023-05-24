@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/jQuery.js"></script>
+    <script src="./login.js"></script>
+    <link rel="stylesheet" href="./login.css" />
+  </head>
+  <body>
+    <canvas class="myc"></canvas>
+    <!-- 登录 -->
+    <form class="box login">
+      <div class="item">
+        <span>用户名：</span>
+        <input type="text" placeholder="请输入用户名" class="username" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>密码：</span>
+        <input type="password" placeholder="请输入密码" class="password" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>自动登录：</span>
+        <select name="" id="" class="time">
+          <option value="1" selected>不保存</option>
+          <option value="2">1小时</option>
+          <option value="3">1天</option>
+          <option value="4">1个月</option>
+        </select>
+      </div>
+      <div class="go_reg_log">
+        <a href="javascript:;" id="goreg">没有账号，去注册>></a>
+      </div>
+      <div class="item foo">
+        <button type="reset" class="reset">重置</button>
+        <button type="submit">提交</button>
+      </div>
+    </form>
+
+    <!-- 注册 -->
+    <form class="box register" style="display: none">
+      <div class="item">
+        <span>用户名：</span>
+        <input type="text" placeholder="请输入用户名" class="uname" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>密码：</span>
+        <input type="password" placeholder="请输入密码" class="pwd" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>确认密码：</span>
+        <input type="password" placeholder="请输入密码" class="pwd2" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>邮箱：</span>
+        <input type="text" placeholder="请输入用户名" class="email" />
+        <p class="msg"></p>
+      </div>
+      <div class="item">
+        <span>QQ：</span>
+        <input type="text" placeholder="请输入用户名" class="qq" />
+        <p class="msg"></p>
+      </div>
+      <div class="go_reg_log">
+        <a href="javascript:;" id="gologin">有账号，去登录>></a>
+      </div>
+      <div class="item foo">
+        <button type="reset" class="reset">重置</button>
+        <button type="submit">提交</button>
+      </div>
+    </form>
+  </body>
+  <script>
+    let hideMsg = () => {
+      document.querySelectorAll('.msg').forEach((ele) => {
+        ele.style.display = 'none'
+      })
+    }
+    $('#goreg').click(() => {
+      $('.login').hide()
+      $('.register').show()
+      $('.login').trigger('reset')
+      hideMsg()
+    })
+    $('#gologin').click(() => {
+      $('.login').show()
+      $('.register').hide()
+      $('.register').trigger('reset')
+      hideMsg()
+    })
+    // 重置
+    $('.reset').click(() => {
+      hideMsg()
+    })
+  </script>
+</html>
